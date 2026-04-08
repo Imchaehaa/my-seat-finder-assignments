@@ -1,5 +1,0 @@
-{
-  "name": "SeatFinder",
-  "description": "Real-time cafe seat finder for students and remote workers with AI-powered predictions and recommendations.",
-  "requestFramePermissions": ["geolocation"]
-}
