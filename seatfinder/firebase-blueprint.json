@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "Cafe": {
+      "title": "Cafe",
+      "description": "Information about a cafe including its location, status, and AI-predicted data.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the cafe" },
+        "address": { "type": "string", "description": "Physical address" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "congestion": { "type": "string", "enum": ["low", "medium", "high"], "description": "Real-time congestion level" },
+        "seatTypes": { "type": "array", "items": { "type": "string" }, "description": "Available seat types (1p, 2p, group)" },
+        "hasOutlets": { "type": "boolean" },
+        "hasWifi": { "type": "boolean" },
+        "atmosphere": { "type": "string", "enum": ["quiet", "vibrant", "cozy"] },
+        "imageUrl": { "type": "string" },
+        "aiPrediction": {
+          "type": "object",
+          "properties": {
+            "goldenTime": { "type": "string", "description": "Predicted time when it gets busy" },
+            "isGuessed": { "type": "boolean", "description": "True if data is AI-guessed due to lack of reviews" }
+          }
+        }
+      },
+      "required": ["name", "latitude", "longitude", "congestion"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "User review for a cafe.",
+      "type": "object",
+      "properties": {
+        "cafeId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["cafeId", "userId", "rating", "comment"]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "description": "User's favorite cafe mapping.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "cafeId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "cafeId"]
+    }
+  },
+  "firestore": {
+    "/cafes/{cafeId}": {
+      "schema": "Cafe",
+      "description": "Collection of cafes"
+    },
+    "/cafes/{cafeId}/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Reviews for a specific cafe"
+    },
+    "/users/{userId}/favorites/{favoriteId}": {
+      "schema": "Favorite",
+      "description": "User's favorite cafes"
+    }
+  }
+}
